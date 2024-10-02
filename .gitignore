@@ -31,3 +31,4 @@ msbuild.err
 msbuild.wrn
 /backend/bin/
 /backend/obj/
+/.idea/

@@ -15,7 +15,7 @@ public BookController(BookRepository bookRepository)
 }
 
 
-[HttpGet("{title}")]
+
 
     [HttpGet]
     public List<BookModel> GetAllBooks()
@@ -23,6 +23,7 @@ public BookController(BookRepository bookRepository)
         return _bookRepository.GetAllBooks();
     }
     
+    [HttpGet("{title}")]
     public async Task<ActionResult<List<BookModel>>> GetBookTitle(string title)
     {  
         // Search for books where title contains the given string
@@ -36,6 +37,20 @@ public BookController(BookRepository bookRepository)
    
         // Return the list of books if found
         return Ok(books); 
+    }
+    
+    
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<BookModel>> GetBookId(int id)
+    {
+        var book = await _bookRepository.GetBookById(id);
+
+        if (book == null)
+        {
+            return NotFound(new { Message = "No book found with that ID" });
+        }
+
+        return Ok(book);
     }
 }
 

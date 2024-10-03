@@ -41,11 +41,16 @@ namespace DefaultNamespace
     [Required]
     public string ISBN { get; set; }
 
+	/// <summary>
+    /// The edition of the book.
+    /// </summary>
+	public string Edition { get; set; } 
+
     /// <summary>
     /// The language the book is written in.
     /// </summary>
     [Required]
-    public string Language { get; set; }
+    public string Language { get; set; } 
 
 
      /*   public BookModel(int id, string title, string author, string publisher, DateTime publicationDate, string isbn, string edition, string language)

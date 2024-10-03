@@ -26,6 +26,14 @@ public BookController(BookRepository bookRepository)
         return _bookRepository.GetAllBooks();
     }
     
+
+	/// <summary>
+	/// Retrieves a book by its title.
+	/// </summary>
+	/// <param name="title">The title of the book.</param>
+	/// <returns>A list of books matching the specified title.</returns>
+	/// <response code="200">Returns the list of books that match the title.</response>
+	/// <response code="404">If no books are found with the given title.</response>
     [HttpGet("search/title/{title}")]
 	public async Task<ActionResult<List<BookModel>>> GetBookTitle(string title)
 	{

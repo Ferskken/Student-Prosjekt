@@ -72,7 +72,14 @@ public BookController(BookRepository bookRepository)
 
         return Ok(book);
     }
-
+	
+	/// <summary>
+	/// Retrieves a book by its author.
+	/// </summary>
+	/// <param name="author">The author of the book.</param>
+	/// <returns>A list of books matching the specified author.</returns>
+	/// <response code="200">Returns the list of books that match the author.</response>
+	/// <response code="404">If no books are found with the given author.</response>
    [HttpGet("search/author/{author}")]
     public async Task<ActionResult<List<BookModel>>> GetBookAuthor(string author)
     {  
@@ -86,7 +93,15 @@ public BookController(BookRepository bookRepository)
    
         return Ok(books); 
     }
+	
 
+	/// <summary>
+	/// Retrieves a book by its publisher.
+	/// </summary>
+	/// <param name="publisher">The publisher of the book.</param>
+	/// <returns>A list of books matching the specified publisher.</returns>
+	/// <response code="200">Returns the list of books that match the publisher.</response>
+	/// <response code="404">If no books are found with the given publisher.</response>
    [HttpGet("search/publisher/{publisher}")]
     public async Task<ActionResult<List<BookModel>>> GetBookPublisher(string publisher)
     {  
@@ -101,7 +116,14 @@ public BookController(BookRepository bookRepository)
         return Ok(books); 
     }
 
-
+	
+	/// <summary>
+	/// Retrieves a book by its isbn.
+	/// </summary>
+	/// <param name="isbn">The isbn of the book.</param>
+	/// <returns>A list of books matching the specified isbn.</returns>
+	/// <response code="200">Returns the list of books that match the isbn.</response>
+	/// <response code="404">If no books are found with the given isbn.</response>
 	[HttpGet("search/isbn/{isbn}")]
     public async Task<ActionResult<List<BookModel>>> GetBookIsbn(string isbn)
     {  
@@ -115,7 +137,14 @@ public BookController(BookRepository bookRepository)
    
         return Ok(books); 
     }
-
+	
+	/// <summary>
+	/// Retrieves a book by its language.
+	/// </summary>
+	/// <param name="isbn">The language of the book.</param>
+	/// <returns>A list of books matching the specified language.</returns>
+	/// <response code="200">Returns the list of books that match the language.</response>
+	/// <response code="404">If no books are found with the given language.</response>
 	[HttpGet("search/language/{language}")]
     public async Task<ActionResult<List<BookModel>>> GetBookLanguage(string language)
     {  
@@ -129,7 +158,31 @@ public BookController(BookRepository bookRepository)
    
         return Ok(books); 
     }
-
+	
+	/// <summary>
+	/// Creates a new book in the database.
+	/// </summary>
+	/// <remarks>
+	/// Sample request:
+	/// 
+	///     POST /book/create
+	///     {
+	///         "title": "New Book Title",
+	///         "author": "John Doe",
+	///         "isbn": "9780261103666",
+	///         "publisher": "Some Publisher",
+	///         "publicationDate": "2024-10-10",
+	///         "edition": "1st",
+	///         "language": "English"
+	///     }
+	///     
+	/// The publication date should be in the format 'yyyy-MM-dd'.
+	/// </remarks>
+	/// <param name="newBook">The book data to create, provided in the request body.</param>
+	/// <returns>The created book with its generated ID.</returns>
+	/// <response code="201">The book was created successfully, and the created book is returned.</response>
+	/// <response code="400">Invalid book data provided. Check the request body.</response>
+	/// <response code="500">An error occurred while creating the book.</response>
 	[HttpPost("create")]
 	[ProducesResponseType(typeof(BookModel), StatusCodes.Status201Created)] // Book created successfully
 	[ProducesResponseType(StatusCodes.Status400BadRequest)] // Invalid data

@@ -23,24 +23,24 @@ public BookController(BookRepository bookRepository)
         return _bookRepository.GetAllBooks();
     }
     
-    [HttpGet("{title}")]
-    public async Task<ActionResult<List<BookModel>>> GetBookTitle(string title)
-    {  
-        // Search for books where title contains the given string
-        var books = await _bookRepository.GetBooksByTitle(title);
-   
-        // Handle case when no books are found
-        if (books == null || books.Count == 0)
-        {
-            return NotFound(new { Message = "No books found with that title" });
-        }
-   
-        // Return the list of books if found
-        return Ok(books); 
+    [HttpGet("search/title/{title}")]
+public async Task<ActionResult<List<BookModel>>> GetBookTitle(string title)
+{
+    // Call the repository to fetch books by title
+    var books = await _bookRepository.GetBooksByTitle(title);
+
+    // If no books are found, return 404
+    if (books == null || books.Count == 0)
+    {
+        return NotFound(new { Message = "No books found with that title" });
     }
+
+    // Return the list of books if found
+    return Ok(books);
+}
     
     
-    [HttpGet("{id:int}")]
+    [HttpGet("search/id/{id:int}")]
     public async Task<ActionResult<BookModel>> GetBookId(int id)
     {
         var book = await _bookRepository.GetBookById(id);
@@ -52,6 +52,35 @@ public BookController(BookRepository bookRepository)
 
         return Ok(book);
     }
+
+   [HttpGet("search/author/{author}")]
+    public async Task<ActionResult<List<BookModel>>> GetBookAuthor(string author)
+    {  
+      
+        var books = await _bookRepository.GetBooksByAuthor(author);
+   
+        if (books == null || books.Count == 0)
+        {
+            return NotFound(new { Message = "No books found with that author" });
+        }
+   
+        return Ok(books); 
+    }
+
+   [HttpGet("search/publisher/{publisher}")]
+    public async Task<ActionResult<List<BookModel>>> GetBookPublisher(string publisher)
+    {  
+      
+        var books = await _bookRepository.GetBooksByPublisher(publisher);
+   
+        if (books == null || books.Count == 0)
+        {
+            return NotFound(new { Message = "No books found with that publisher" });
+        }
+   
+        return Ok(books); 
+    }
+
 }
 
 

@@ -127,6 +127,7 @@ export const bookServices = {
         success: true,
       };
     } else {
+      const errorMessage = await response.text();
       console.error('Failed to delete nook with ID ${id}');
       throw new Error('Book not found');
     }

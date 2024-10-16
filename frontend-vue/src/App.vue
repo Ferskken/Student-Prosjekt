@@ -3,7 +3,7 @@
    import HelloWorld from './components/HelloWorld.vue'
    import  {bookServices} from '@/services/bookServices'
    import {useBooksStore} from '@/stores/books'
-   //import NewBook from '@/components/NewBook.vue'
+   import BookSearch from '@/components/BookSearch.vue'
 
   const onGetAllBooksClicked =  async ()=> {
      const books = await bookServices.getAllBooks()
@@ -34,13 +34,12 @@
       </button>
 
 
-
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="bookList">List all Books</RouterLink>
 
       </nav>
+      <BookSearch/>
     </div>
   </header>
 

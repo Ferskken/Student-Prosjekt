@@ -59,13 +59,22 @@ const searchBook = async () => {
     } else if (searchType.value === 'author') {
       result = await bookServices.getBookByAuthor(query.value);
     }
-    book.value = result;
+
+    if (Array.isArray(result) && result.length > 1) {
+      // Show only the first result but indicate that there are more
+      book.value = result[0];
+      error.value = 'Showing the first result out of multiple matches.';
+    } else {
+      book.value = Array.isArray(result) ? result[0] : result;
+    }
   } catch (err) {
     error.value = 'Book not found.';
   } finally {
     loading.value = false;
   }
 };
+
+
 </script>
 
 <style scoped>

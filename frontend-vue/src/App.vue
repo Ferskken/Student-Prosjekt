@@ -1,9 +1,7 @@
 <script setup lang="ts">
    import { RouterLink, RouterView } from 'vue-router'
-   import HelloWorld from './components/HelloWorld.vue'
    import  {bookServices} from '@/services/bookServices'
    import {useBooksStore} from '@/stores/books'
-   import BookSearch from '@/components/BookSearch.vue'
 
   const onGetAllBooksClicked =  async ()=> {
      const books = await bookServices.getAllBooks()
@@ -16,9 +14,9 @@
 </script>
 
 <template>
-  <header>
-
-
+<!--  <body>-->
+  <header class="header">
+    <!-- Logo Image -->
     <img
       alt="Vue logo"
       class="logo"
@@ -27,29 +25,100 @@
       height="125"
     />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      <button @click="onGetAllBooksClicked()">Book Services>
-        GetAllBooks
-      </button>
-
-
+    <!-- Navigation & Button -->
+    <div class="nav-wrapper">
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="bookList">List all Books</RouterLink>
-
+        <RouterLink to="/" class="nav-button">Add Book</RouterLink>
+        <RouterLink to="bookList" class="nav-button">List all Books</RouterLink>
+        <RouterLink to="bookSearch" class="nav-button">Book Search</RouterLink>
+        <RouterLink to="bookDelete" class="nav-button">Delete Book</RouterLink>
       </nav>
-      <BookSearch/>
-    </div>
-  </header>
 
-  <RouterView />
+      <!-- Button -->
+      <div class="get-books-btn">
+        <button @click="onGetAllBooksClicked()">Get All Books</button>
+      </div>
+    </div>
+    <RouterView/>
+  </header>
+<!--  </body>-->
+
+
 
 </template>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%; /* Full width */
+  padding: 20px;
+  //background-color: #f5f5f5;
+  position: fixed; /* Fixes the header to the top of the page */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Make sure it's on top */
+}
+
+.logo {
+  margin-right: 20px; /* Space between logo and nav */
+}
+
+.nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+nav {
+  margin-bottom: 20px; /* Space between nav and button */
+}
+.nav-button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+}
+nav a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #007bff;
+}
+
+.get-books-btn button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.get-books-btn button:hover {
+  background-color: #0056b3;
+}
 </style>
+
 
 
 

@@ -32,13 +32,14 @@
       </div>
       <button type="submit">Add Book</button>
     </form>
-    <div v-if="error" class="error">{{ error }}</div> <!-- This line accesses error -->
+    <div v-if="error" class="error">{{ error }}</div>
+    <button @click="addTestBook">Add Test Book</button>
   </div>
 
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';  // Ensure computed is imported
+import { ref, computed } from 'vue';
 import { useBooksStore } from '@/stores/books';
 import { bookServices } from '@/services/bookServices';
 import type { BookModel } from '@/models/bookModel';
@@ -54,6 +55,19 @@ const newBook = ref<BookModel>({
   edition: '',
   language: '',
 });
+const addTestBook = () => {
+  newBook.value = {
+    id: 0, // ID will be generated on the backend
+    title: 'Test Book Title',
+    author: 'Test Author',
+    publisher: 'Test Publisher',
+    publicationDate: '2024-01-01', // Example date
+    isbn: '123-456-789', // Example ISBN
+    edition: '1st',
+    language: 'English',
+  };
+  handleSubmit();
+}
 
 
 const error = ref<string | null>(null);
@@ -83,7 +97,6 @@ const handleSubmit = async () => {
       edition: '',
       language: '',
     };
-
     error.value = null;
   } catch (err) {
     error.value = 'Failed to add the book. Please try again.';

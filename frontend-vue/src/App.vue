@@ -1,20 +1,20 @@
 <script setup lang="ts">
    import { RouterLink, RouterView } from 'vue-router'
-   import  {bookServices} from '@/services/bookServices'
-   import {useBooksStore} from '@/stores/books'
+   // import  {bookServices} from '@/services/bookServices'
+   // import {useBooksStore} from '@/stores/books'
 
-  const onGetAllBooksClicked =  async ()=> {
-     const books = await bookServices.getAllBooks()
-    console.log(books)
-     const store = useBooksStore()
-    console.log(store.books)
-     store.setBooks(books)
-  }
+  // const onGetAllBooksClicked =  async ()=> {
+  //    const books = await bookServices.getAllBooks()
+  //   console.log(books)
+  //    const store = useBooksStore()
+  //   console.log(store.books)
+  //    store.setBooks(books)
+  // }
 
 </script>
 
 <template>
-<!--  <body>-->
+
   <header class="header">
     <!-- Logo Image -->
     <img
@@ -35,13 +35,13 @@
       </nav>
 
       <!-- Button -->
-      <div class="get-books-btn">
-        <button @click="onGetAllBooksClicked()">Get All Books</button>
-      </div>
+<!--      <div class="get-books-btn">-->
+<!--        <button @click="onGetAllBooksClicked()">Get All Books</button>-->
+<!--      </div>-->
     </div>
     <RouterView/>
   </header>
-<!--  </body>-->
+
 
 
 

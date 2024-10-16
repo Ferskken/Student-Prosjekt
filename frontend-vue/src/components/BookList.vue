@@ -1,9 +1,18 @@
 <template>
   <div class="book-list">
     <h2>Book List</h2>
+    <div>
+      <input
+        type="text"
+        v-model="searchTerm"
+        placeholder="Search books..."
+        @input="searchBooks"
+      />
+    </div>
     <div class="scroll-container">
       <div class="grid-container">
-        <div class="grid-item" v-for="book in books" :key="book.id" @click="selectBook(book)">
+<!--        <div class="grid-item" v-for="book in books" :key="book.id" @click="selectBook(book)">-->
+          <div class="grid-item" v-for="book in filteredBooks" :key="book.id" @click="selectBook(book)">
           <div class="delete-icon" @click.stop="deleteBook(book.id)">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 256 256" xml:space="preserve">
               <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
@@ -74,6 +83,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useBooksStore } from '@/stores/books';
 import { bookServices } from '@/services/bookServices';
 import type { BookModel } from '@/models/bookModel';
+import Fuse from 'fuse.js';
 
 const store = useBooksStore();
 const loading = ref(true);
@@ -92,13 +102,15 @@ onMounted(async () => {
   }
 });
 
-const books = computed(() => store.getBooks);
+const allBooks = computed(() => store.getBooks);
 
 const selectBook = (book: BookModel) => {
   selectedBook.value = book;
   editBook.value = { ...book }; // Copy the selected book for editing
   isEditing.value = false; // Reset editing state
 };
+
+
 
 const deleteBook = async (bookId: number) => {
   console.log(`Attempting to delete book with ID: ${bookId}`);
@@ -147,6 +159,37 @@ const updateBook = async () => {
     error.value = 'Failed to update the book. Please try again.';
   }
 };
+
+const searchTerm = ref('');
+const filteredBooks = ref([]);
+
+const books = computed(() => store.getBooks);
+
+onMounted(() => {
+  filteredBooks.value = books.value;
+});
+
+const searchBooks = () => {
+
+  if (!searchTerm.value.trim()) {
+
+    filteredBooks.value = allBooks.value;
+    return;
+  }
+
+  const options = {
+    keys: ['title', 'author', 'publisher', 'isbn', 'language','id','publicationDate'],
+    threshold: 0.2,
+  };
+
+  const fuse = new Fuse(allBooks.value, options);
+
+  const result = fuse.search(searchTerm.value);
+
+  filteredBooks.value = result.map(item => item.item);
+};
+
+
 
 
 </script>

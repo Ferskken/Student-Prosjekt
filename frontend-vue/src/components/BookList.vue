@@ -5,10 +5,12 @@
       <div class="grid-container">
         <div class="grid-item" v-for="book in books" :key="book.id" @click="selectBook(book)">
           <div class="delete-icon" @click.stop="deleteBook(book.id)">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path
-                d="M11.447 8.894a1 1 0 1 0-.894-1.789l.894 1.789zm-2.894-.789a1 1 0 1 0 .894 1.789l-.894-1.789zm0 1.789a1 1 0 1 0 .894-1.789l-.894 1.789zM7.447 7.106a1 1 0 1 0-.894 1.789l.894-1.789zM10 9a1 1 0 1 0-2 0h2zm-2 2.5a1 1 0 1 0 2 0H8zm9.447-5.606a1 1 0 1 0-.894-1.789l.894 1.789zm-2.894-.789a1 1 0 1 0 .894 1.789l-.894-1.789zm2 .789a1 1 0 1 0 .894-1.789l-.894 1.789zm-1.106-2.789a1 1 0 1 0-.894 1.789l.894-1.789zM18 5a1 1 0 1 0-2 0h2zm-2 2.5a1 1 0 1 0 2 0h-2zm-5.447-4.606a1 1 0 1 0 .894-1.789l-.894 1.789zM9 1l.447-.894a1 1 0 0 0-.894 0L9 1zm-2.447.106a1 1 0 1 0 .894 1.789l-.894-1.789zm-6 3a1 1 0 1 0 .894 1.789L.553 4.106zm2.894.789a1 1 0 1 0-.894-1.789l.894 1.789zm-2-.789a1 1 0 1 0-.894 1.789l.894-1.789zm1.106 2.789a1 1 0 1 0 .894-1.789l-.894 1.789zM2 5a1 1 0 1 0-2 0h2zM0 7.5a1 1 0 1 0 2 0H0zm8.553 12.394a1 1 0 1 0 .894-1.789l-.894 1.789zm-1.106-2.789a1 1 0 1 0-.894 1.789l.894-1.789zm1.106 1a1 1 0 1 0 .894 1.789l-.894-1.789zm2.894.789a1 1 0 1 0-.894-1.789l.894 1.789zM8 19a1 1 0 1 0 2 0H8zm2-2.5a1 1 0 1 0-2 0h2zm-7.447.394a1 1 0 1 0 .894-1.789l-.894 1.789zM1 15H0a1 1 0 0 0 .553.894L1 15zm1-2.5a1 1 0 1 0-2 0h2zm12.553 2.606a1 1 0 1 0 .894 1.789l-.894-1.789zM17 15l.447.894A1 1 0 0 0 18 15h-1zm1-2.5a1 1 0 1 0-2 0h2zm-7.447-5.394l-2 1 .894 1.789 2-1-.894-1.789zm-1.106 1l-2-1-.894 1.789 2 1 .894-1.789zM8 9v2.5h2V9H8zm8.553-4.894l-2 1 .894 1.789 2-1-.894-1.789zm.894 0l-2-1-.894 1.789 2 1 .894-1.789zM16 5v2.5h2V5h-2zm-4.553-3.894l-2-1-.894 1.789 2 1 .894-1.789zm-2.894-1l-2 1 .894 1.789 2-1L8.553.106zM1.447 5.894l2-1-.894-1.789-2 1 .894 1.789zm-.894 0l2 1 .894-1.789-2-1-.894 1.789zM0 5v2.5h2V5H0zm9.447 13.106l-2-1-.894 1.789 2 1 .894-1.789zm0 1.789l2-1-.894-1.789-2 1 .894 1.789zM10 19v-2.5H8V19h2zm-6.553-3.894l-2-1-.894 1.789 2 1 .894-1.789zM2 15v-2.5H0V15h2zm13.447 1.894l2-1-.894-1.789-2 1 .894 1.789zM18 15v-2.5h-2V15h2z"
-              />           </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 256 256" xml:space="preserve">
+              <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                <path d="M 76.777 2.881 H 57.333 V 2.412 C 57.333 1.08 56.253 0 54.921 0 H 35.079 c -1.332 0 -2.412 1.08 -2.412 2.412 v 0.469 H 13.223 c -1.332 0 -2.412 1.08 -2.412 2.412 v 9.526 c 0 1.332 1.08 2.412 2.412 2.412 h 63.554 c 1.332 0 2.412 -1.08 2.412 -2.412 V 5.293 C 79.189 3.961 78.109 2.881 76.777 2.881 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="matrix(1 0 0 1 0 0)" stroke-linecap="round" />
+                <path d="M 73.153 22.119 H 16.847 c -1.332 0 -2.412 1.08 -2.412 2.412 v 63.057 c 0 1.332 1.08 2.412 2.412 2.412 h 56.306 c 1.332 0 2.412 -1.08 2.412 -2.412 V 24.531 C 75.565 23.199 74.485 22.119 73.153 22.119 z M 33.543 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z M 48.535 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z M 63.526 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="matrix(1 0 0 1 0 0)" stroke-linecap="round" />
+              </g>
+            </svg>
           </div>
           <h3>{{ book.title }}</h3>
           <p><strong>ID:</strong> {{ book.id }}</p>
@@ -27,21 +29,45 @@
     <!-- Selected Book Information -->
     <div v-if="selectedBook" class="selected-book">
       <h3>Selected Book Details</h3>
-      <p><strong>Title:</strong> {{ selectedBook.title }}</p>
-      <p><strong>ID:</strong> {{ selectedBook.id }}</p>
-      <p><strong>Author:</strong> {{ selectedBook.author }}</p>
-      <p><strong>Publisher:</strong> {{ selectedBook.publisher }}</p>
-      <p><strong>Publication Date:</strong> {{ new Date(selectedBook.publicationDate).toLocaleDateString() }}</p>
-      <p><strong>ISBN:</strong> {{ selectedBook.isbn }}</p>
-      <p><strong>Edition:</strong> {{ selectedBook.edition }}</p>
-      <p><strong>Language:</strong> {{ selectedBook.language }}</p>
+      <div v-if="isEditing">
+        <label for="edit-title">Title:</label>
+        <input id="edit-title" v-model="editBook.title" required />
+
+        <label for="edit-author">Author:</label>
+        <input id="edit-author" v-model="editBook.author" required />
+
+        <label for="edit-publisher">Publisher:</label>
+        <input id="edit-publisher" v-model="editBook.publisher" required />
+
+        <label for="edit-publication-date">Publication Date:</label>
+        <input id="edit-publication-date" type="datetime-local" v-model="editBook.publicationDate" required />
+
+        <label for="edit-isbn">ISBN:</label>
+        <input id="edit-isbn" v-model="editBook.isbn" required />
+
+        <label for="edit-edition">Edition:</label>
+        <input id="edit-edition" v-model="editBook.edition" />
+
+        <label for="edit-language">Language:</label>
+        <input id="edit-language" v-model="editBook.language" required />
+
+        <button @click="updateBook">Update</button>
+        <button @click="cancelEdit">Cancel</button>
+      </div>
+      <div v-else>
+        <p><strong>Title:</strong> {{ selectedBook.title }}</p>
+        <p><strong>ID:</strong> {{ selectedBook.id }}</p>
+        <p><strong>Author:</strong> {{ selectedBook.author }}</p>
+        <p><strong>Publisher:</strong> {{ selectedBook.publisher }}</p>
+        <p><strong>Publication Date:</strong> {{ new Date(selectedBook.publicationDate).toLocaleDateString() }}</p>
+        <p><strong>ISBN:</strong> {{ selectedBook.isbn }}</p>
+        <p><strong>Edition:</strong> {{ selectedBook.edition }}</p>
+        <p><strong>Language:</strong> {{ selectedBook.language }}</p>
+        <button @click="startEditing">Edit</button> <!-- Button to start editing -->
+      </div>
     </div>
   </div>
 </template>
-
-
-
-
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
@@ -52,15 +78,17 @@ import type { BookModel } from '@/models/bookModel';
 const store = useBooksStore();
 const loading = ref(true);
 const error = ref<string | null>(null);
-const selectedBook = ref<BookModel | null>(null); // Reactive reference for the selected book
+const selectedBook = ref<BookModel | null>(null);
+const isEditing = ref(false);
+const editBook = ref<BookModel | null>(null); // For editing book
 
 onMounted(async () => {
   try {
-    loading.value = true; // Set loading to true before fetching
+    loading.value = true;
     const books: BookModel[] = await bookServices.getAllBooks();
-    store.setBooks(books); // Store fetched books in Pinia store
+    store.setBooks(books);
   } finally {
-    loading.value = false; // Set loading to false after fetching
+    loading.value = false;
   }
 });
 
@@ -68,26 +96,60 @@ const books = computed(() => store.getBooks);
 
 const selectBook = (book: BookModel) => {
   selectedBook.value = book;
+  editBook.value = { ...book }; // Copy the selected book for editing
+  isEditing.value = false; // Reset editing state
 };
 
 const deleteBook = async (bookId: number) => {
   console.log(`Attempting to delete book with ID: ${bookId}`);
-
   try {
     await bookServices.deleteBookbyId(bookId);
     console.log(`Book with ID ${bookId} deleted successfully`);
-
-    // Update the state to remove the deleted book
     store.setBooks(store.getBooks.filter(book => book.id !== bookId));
-    selectedBook.value = null; // Reset the selected book
+    selectedBook.value = null;
   } catch (err) {
     console.error('Error details:', err);
     error.value = 'Failed to delete the book. Please try again.';
   }
 };
 
-</script>
+// Start editing mode
+const startEditing = () => {
+  editBook.value = { ...selectedBook.value,publicationDate: selectedBook.value.publicationDate };
+  console.log(selectedBook.value.publicationDate)
+  console.log(selectedBook.value)
+  isEditing.value = true;
+};
 
+// Cancel editing mode
+const cancelEdit = () => {
+  isEditing.value = false; // Exit editing mode
+  if (selectedBook.value) {
+    editBook.value = { ...selectedBook.value };
+
+  }
+};
+
+// Update book details
+const updateBook = async () => {
+  if (!editBook.value) return;
+
+  try {
+    await bookServices.updateBook(editBook.value); // Call the update service
+    console.log(`Book with ID ${editBook.value.id} updated successfully`);
+
+    // Update store and reset selected book
+    store.setBooks(store.getBooks.map(book => (book.id === editBook.value.id ? editBook.value : book)));
+    selectedBook.value = editBook.value; // Update the selected book to the edited one
+    isEditing.value = false; // Exit editing mode
+  } catch (err) {
+    console.error('Error details:', err);
+    error.value = 'Failed to update the book. Please try again.';
+  }
+};
+
+
+</script>
 
 <style scoped>
 .book-list {
@@ -101,11 +163,11 @@ const deleteBook = async (bookId: number) => {
 }
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(5, minmax(200px, 1fr)); /* Responsive grid */
-  gap: 10px; /* Space between grid items */
+  grid-template-columns: repeat(5, minmax(200px, 1fr));
+  gap: 10px;
 }
 .grid-item {
-  position: relative; /* Positioning context for the delete icon */
+  position: relative;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
@@ -127,4 +189,3 @@ const deleteBook = async (bookId: number) => {
   border-radius: 5px;
 }
 </style>
-

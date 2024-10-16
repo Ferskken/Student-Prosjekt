@@ -62,7 +62,7 @@ const addTestBook = () => {
     author: 'Test Author',
     publisher: 'Test Publisher',
     publicationDate: '2024-01-01', // Example date
-    isbn: '123-456-789', // Example ISBN
+    isbn: '123456789', // Example ISBN
     edition: '1st',
     language: 'English',
   };

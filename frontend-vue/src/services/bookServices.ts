@@ -132,6 +132,28 @@ export const bookServices = {
       throw new Error('Book not found');
     }
 
-  }
+  },
+
+  updateBook: async (book: BookModel) => {
+    console.log("updateBook Called");
+    const response = await fetch(`http://localhost:5189/book/update/${book.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(book),
+    });
+
+    if (response.ok) {
+      const updatedBook = await response.json();
+      console.log(`Book with ID ${book.id} updated successfully`, updatedBook);
+      return updatedBook;
+    } else {
+      console.error(`Failed to update book with ID ${book.id}`);
+      throw new Error('Update failed');
+    }
+  },
+
+
 
 };

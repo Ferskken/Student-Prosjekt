@@ -11,7 +11,6 @@
     </div>
     <div class="scroll-container">
       <div class="grid-container">
-<!--        <div class="grid-item" v-for="book in books" :key="book.id" @click="selectBook(book)">-->
           <div class="grid-item" v-for="book in filteredBooks" :key="book.id" @click="selectBook(book)">
             <div class="delete-icon" @click.stop="deleteBook(book.id)">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 256 256" xml:space="preserve">
@@ -89,15 +88,15 @@
         <p><strong>ISBN:</strong> {{ selectedBook.isbn }}</p>
         <p><strong>Edition:</strong> {{ selectedBook.edition }}</p>
         <p><strong>Language:</strong> {{ selectedBook.language }}</p>
-        <button class="selected-book-edit-button" @click="startEditing">Edit</button>
-        <button class="selected-book-delete-button" @click="deleteBook(selectedBook.id)">Delete</button>
+        <button class="selected-book-edit-button" @click.stop ="startEditing">Edit</button>
+        <button class="selected-book-delete-button" @click.stop ="deleteBook(selectedBook.id)">Delete</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted,onUnmounted, computed } from 'vue';
 import { useBooksStore } from '@/stores/books';
 import { bookServices } from '@/services/bookServices';
 import type { BookModel } from '@/models/bookModel';
@@ -108,7 +107,10 @@ const loading = ref(true);
 const error = ref<string | null>(null);
 const selectedBook = ref<BookModel | null>(null);
 const isEditing = ref(false);
-const editBook = ref<BookModel | null>(null); // For editing book
+const editBook = ref<BookModel | null>(null);
+const searchTerm = ref('');
+const filteredBooks = ref([]);
+const exitingEditing = ref(false);
 
 onMounted(async () => {
   try {
@@ -122,42 +124,54 @@ onMounted(async () => {
 
 const allBooks = computed(() => store.getBooks);
 
-const selectBook = (book: BookModel) => {
-  selectedBook.value = book;
-  editBook.value = { ...book }; // Copy the selected book for editing
-  isEditing.value = false; // Reset editing state
-};
+// const selectBook = (book: BookModel) => {
+//   selectedBook.value = book;
+//   editBook.value = { ...book }; // Copy the selected book for editing
+//   isEditing.value = false; // Reset editing state
+// };
 
 
 
-const deleteBook = async (bookId: number) => {
-  console.log(`Attempting to delete book with ID: ${bookId}`);
-  try {
-    await bookServices.deleteBookbyId(bookId);
-    console.log(`Book with ID ${bookId} deleted successfully`);
-    store.setBooks(store.getBooks.filter(book => book.id !== bookId));
-    selectedBook.value = null;
-  } catch (err) {
-    console.error('Error details:', err);
-    error.value = 'Failed to delete the book. Please try again.';
-  }
-};
+// const deleteBook = async (bookId: number) => {
+//   console.log(`Attempting to delete book with ID: ${bookId}`);
+//   try {
+//     await bookServices.deleteBookbyId(bookId);
+//     console.log(`Book with ID ${bookId} deleted successfully`);
+//     store.setBooks(store.getBooks.filter(book => book.id !== bookId));
+//     selectedBook.value = null;
+//   } catch (err) {
+//     console.error('Error details:', err);
+//     error.value = 'Failed to delete the book. Please try again.';
+//   }
+// };
 
 // Start editing mode
+// const startEditing = () => {
+//   editBook.value = { ...selectedBook.value,publicationDate: selectedBook.value.publicationDate };
+//   console.log(selectedBook.value.publicationDate)
+//   console.log(selectedBook.value)
+//   isEditing.value = true;
+// };
+
 const startEditing = () => {
-  editBook.value = { ...selectedBook.value,publicationDate: selectedBook.value.publicationDate };
-  console.log(selectedBook.value.publicationDate)
-  console.log(selectedBook.value)
-  isEditing.value = true;
+  if (selectedBook.value) {
+   // console.log("Starting editing for:", selectedBook.value);
+    editBook.value = { ...selectedBook.value };
+    isEditing.value = true;
+
+  }
 };
 
 // Cancel editing mode
 const cancelEdit = () => {
-  isEditing.value = false; // Exit editing mode
-  if (selectedBook.value) {
-    editBook.value = { ...selectedBook.value };
 
+  if (selectedBook.value) {
+   // console.log(editBook.value)
+    editBook.value = { ...selectedBook.value };
+   // console.log(selectedBook.value)
   }
+  isEditing.value = false;
+  exitingEditing.value = true;
 };
 
 // Update book details
@@ -177,9 +191,6 @@ const updateBook = async () => {
     error.value = 'Failed to update the book. Please try again.';
   }
 };
-
-const searchTerm = ref('');
-const filteredBooks = ref([]);
 
 const books = computed(() => store.getBooks);
 
@@ -207,7 +218,73 @@ const searchBooks = () => {
   filteredBooks.value = result.map(item => item.item);
 };
 
+// Select a book
+const selectBook = (book: BookModel) => {
+  selectedBook.value = book;
+  editBook.value = { ...book };
+  isEditing.value = false;
+};
 
+// Delete a book
+const deleteBook = async (bookId: number) => {
+  try {
+    await bookServices.deleteBookbyId(bookId);
+    store.setBooks(store.getBooks.filter(book => book.id !== bookId));
+    selectedBook.value = null; // Clear selection after deletion
+  } catch (err) {
+    error.value = 'Failed to delete the book. Please try again.';
+  }
+};
+
+// Handle click outside to hide selected book details
+// const handleClickOutside = (event: MouseEvent) => {
+//   //console.log(selectedBook.value)
+//   const bookListElement = document.querySelector('.book-list');
+//  // console.log(selectedBook.value)
+//   if (bookListElement && !bookListElement.contains(event.target as Node)) {
+//     selectedBook.value = null;
+//     console.log(selectBook.value)
+//   }
+// };
+
+ const handleClickOutside = (event: MouseEvent) => {
+  const bookListElement = document.querySelector('.book-list');
+  if (bookListElement && !bookListElement.contains(event.target as Node)) {
+    // Ensure that you only set selectedBook to null if not editing
+    if (!exitingEditing.value) {
+      selectedBook.value = null; // Hide selected book details only if not editing
+      exitingEditing.value = false;
+    }
+  }
+  exitingEditing.value = false;
+};
+
+
+// const handleClickOutside = (event: MouseEvent) => {
+//   const bookListElement = document.querySelector('.book-list');
+
+  // Check if clicking outside the book list and not in editing mode
+//   if (bookListElement && !bookListElement.contains(event.target as Node)) {
+//     if (isEditing.value) { // Only set selectedBook to null if not in editing mode
+//       selectedBook.value = isEditing.value; // Hide selected book details
+//     }
+//     // else if (!isEditing.value) {
+//     //    selectedBook.value = null; // Hide selected book details only if not editing
+//     //  }
+//   }
+// };
+
+
+
+// Add click event listener on mount
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+// Cleanup listener on unmount
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 
 
 </script>

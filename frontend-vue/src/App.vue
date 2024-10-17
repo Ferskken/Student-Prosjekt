@@ -101,6 +101,7 @@ nav a:hover {
   top: 3rem;
   left: 1rem;
   padding: 20px;
+  width: 95%;
 }
 body {
   margin: 0;

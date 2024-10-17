@@ -8,6 +8,7 @@
         placeholder="Search books..."
         @input="searchBooks"
       />
+<!--      -->
     </div>
     <div class="scroll-container">
       <div class="grid-container">
@@ -300,12 +301,13 @@ onUnmounted(() => {
 }
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(7, minmax(250px, 1fr)); /* Makes the grid responsive */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust min-width to 150px */
   gap: 10px;
   padding: 10px;
-  max-width: 100%; /* Prevents overflow */
+  max-width: 100%;
   box-sizing: border-box;
 }
+
 
 .grid-item {
   cursor: pointer;

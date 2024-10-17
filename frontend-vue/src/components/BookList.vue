@@ -84,8 +84,10 @@
         <p><strong>Edition:</strong> {{ selectedBook.edition }}</p>
         <p><strong>Language:</strong> {{ selectedBook.language }}</p>
         <button class="selected-book-edit-button" @click="startEditing">Edit</button>
-        <button class="selected-book-delete-button" @click="console.log(`${book.value.id}`)">Delete</button>
-<!--        deleteBook(book.id)-->
+<!--        <button class="selected-book-delete-button" @click="console.log(`${selectedBook.id}`)">Delete</button>-->
+        <button class="selected-book-delete-button" @click="deleteBook(selectedBook.id)">Delete</button>
+
+        <!--        deleteBook(book.id)-->
       </div>
     </div>
   </div>

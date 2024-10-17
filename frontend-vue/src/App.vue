@@ -1,7 +1,8 @@
 <script setup lang="ts">
-   import { RouterLink, RouterView } from 'vue-router'
-   // import  {bookServices} from '@/services/bookServices'
-   // import {useBooksStore} from '@/stores/books'
+  import { RouterLink, RouterView } from 'vue-router'
+  //import BookList from '@/components/BookList.vue'
+  // import  {bookServices} from '@/services/bookServices'
+  // import {useBooksStore} from '@/stores/books'
 
   // const onGetAllBooksClicked =  async ()=> {
   //    const books = await bookServices.getAllBooks()
@@ -10,13 +11,10 @@
   //   console.log(store.books)
   //    store.setBooks(books)
   // }
-
 </script>
 
 <template>
-
   <header class="header">
-    <!-- Logo Image -->
     <img
       alt="Vue logo"
       class="logo"
@@ -25,7 +23,6 @@
       height="125"
     />
 
-    <!-- Navigation & Button -->
     <div class="nav-wrapper">
       <nav>
         <RouterLink to="/" class="nav-button">Add Book</RouterLink>
@@ -33,54 +30,47 @@
         <RouterLink to="bookSearch" class="nav-button">Book Search</RouterLink>
         <RouterLink to="bookDelete" class="nav-button">Delete Book</RouterLink>
       </nav>
-
-      <!-- Button -->
-<!--      <div class="get-books-btn">-->
-<!--        <button @click="onGetAllBooksClicked()">Get All Books</button>-->
-<!--      </div>-->
     </div>
-    <RouterView/>
   </header>
 
-
-
-
+  <!-- Ensure the main content is pushed below the header -->
+  <div class="main-content">
+    <RouterView />
+    <!-- You can uncomment and use the component like this -->
+    <!-- <book-list /> -->
+  </div>
 </template>
 
-<style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
+<style>
 .header {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 100%; /* Full width */
+  align-items: center;
+  //justify-content: space-between; /* Distributes space between logo and nav */
+  width: 100%;
   padding: 20px;
-  //background-color: #f5f5f5;
-  position: fixed; /* Fixes the header to the top of the page */
+  background-color: #7daea6;
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000; /* Make sure it's on top */
+  //z-index: 1000;
+  //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-  margin-right: 20px; /* Space between logo and nav */
+  margin-right: 20px;
 }
 
 .nav-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 nav {
-  margin-bottom: 20px; /* Space between nav and button */
+  display: flex;
 }
+
 .nav-button {
   padding: 10px 20px;
   margin-right: 10px;
@@ -91,8 +81,8 @@ nav {
   border-radius: 5px;
   text-decoration: none;
   cursor: pointer;
-  display: inline-block;
 }
+
 nav a {
   margin-right: 10px;
   text-decoration: none;
@@ -104,116 +94,23 @@ nav a:hover {
   color: #007bff;
 }
 
-.get-books-btn button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+/* Style to ensure the content is below the fixed header */
+.main-content {
+  margin-top: 180px; /* Adjust based on your header height */
+  position: absolute;
+  top: 3rem;
+  left: 1rem;
+  padding: 20px;
+}
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #7daea6;
 }
 
-.get-books-btn button:hover {
-  background-color: #0056b3;
+* {
+  box-sizing: border-box;
 }
+
 </style>
-
-
-
-
-
-<!--<script setup lang="ts">-->
-<!--// import { RouterLink, RouterView } from 'vue-router'-->
-<!--// import HelloWorld from './components/HelloWorld.vue'-->
-
-<!--</script>-->
-
-<!--<template>-->
-<!--  <header>-->
-<!--    <img-->
-<!--      alt="Vue logo"-->
-<!--      class="logo"-->
-<!--      src="@/assets/logo.svg"-->
-<!--      width="125"-->
-<!--      height="125"-->
-<!--    />-->
-
-<!--    <div class="wrapper">-->
-<!--      &lt;!&ndash;      <HelloWorld msg="You did it!" />&ndash;&gt;-->
-
-
-<!--      <nav>-->
-<!--        &lt;!&ndash;        <RouterLink to="/">Home</RouterLink>&ndash;&gt;-->
-<!--        &lt;!&ndash;        <RouterLink to="/about">About</RouterLink>&ndash;&gt;-->
-<!--      </nav>-->
-<!--    </div>-->
-<!--  </header>-->
-
-<!--  &lt;!&ndash;  <RouterView />&ndash;&gt;-->
-<!--</template>-->
-
-
-<!--
-header {
-    line-height: 1.5;
-    max-height: 100vh;
-  }
-
-  .logo {
-    display: block;
-    margin: 0 auto 2rem;
-  }
-
-  nav {
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  nav a.router-link-exact-active {
-    color: var(--color-text);
-  }
-
-  nav a.router-link-exact-active:hover {
-    background-color: transparent;
-  }
-
-  nav a {
-    display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-  }
-
-  nav a:first-of-type {
-    border: 0;
-  }
-
-  @media (min-width: 1024px) {
-    header {
-      display: flex;
-      place-items: center;
-      padding-right: calc(var(--section-gap) / 2);
-    }
-
-    .logo {
-      margin: 0 2rem 0 0;
-    }
-
-    header .wrapper {
-      display: flex;
-      place-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    nav {
-      text-align: left;
-      margin-left: -1rem;
-      font-size: 1rem;
-
-      padding: 1rem 0;
-      margin-top: 1rem;
-    }
-  }
-  -->

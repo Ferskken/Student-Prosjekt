@@ -1,7 +1,7 @@
 <template>
   <div class="book-list">
 <!--    <h2>Book List</h2>-->
-    <div>
+    <div class="search-bar">
       <input
         type="text"
         v-model="searchTerm"
@@ -33,6 +33,12 @@
         </div>
       </div>
     </div>
+
+    <div v-if="filteredBooks.length === 0" class="no-books-message">
+      <h3>No books found!</h3>
+    </div>
+
+
     <div v-if="loading">Loading books...</div>
     <div v-if="error" class="error">{{ error }}</div>
 
@@ -84,10 +90,7 @@
         <p><strong>Edition:</strong> {{ selectedBook.edition }}</p>
         <p><strong>Language:</strong> {{ selectedBook.language }}</p>
         <button class="selected-book-edit-button" @click="startEditing">Edit</button>
-<!--        <button class="selected-book-delete-button" @click="console.log(`${selectedBook.id}`)">Delete</button>-->
         <button class="selected-book-delete-button" @click="deleteBook(selectedBook.id)">Delete</button>
-
-        <!--        deleteBook(book.id)-->
       </div>
     </div>
   </div>
@@ -279,5 +282,34 @@ const searchBooks = () => {
   bottom: 0.5rem;
   right: 5rem;
 }
+.search-bar{
+  margin-top: 3rem;
+margin-bottom: 1em;
+}
+.search-bar input{
+  width: 100%;
+  padding: 0.7rem;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1.3rem;
+  transition: border-color 0.3s;
+}
+
+.search-bar input:focus{
+  border-color: #7daea6;
+  outline: none;
+  //box-shadow: 0 0 2rem rgba(0, 123, 255, 0.5);
+}
+.search-bar input::placeholder{
+  color: #aaa
+}
+
+.no-books-message {
+  text-align: center;
+  margin-top: 10rem; /* Space above the message */
+  color: #555;
+  font-size: 6rem; /* Larger font size */
+}
+
 
 </style>

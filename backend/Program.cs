@@ -1,6 +1,7 @@
 using System.Reflection;
 using DefaultNamespace;
 using Dapper;
+using Microsoft.Extensions.Options;
 
 DefaultTypeMap.MatchNamesWithUnderscores = true;
 
@@ -18,6 +19,13 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
+builder.Services.AddCors(options =>
+    {
+    options.AddDefaultPolicy(corsbuilder =>
+        corsbuilder.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+        );
+    }
+);
 
 var app = builder.Build();
 app.MapControllers();
@@ -30,7 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors();
 
 var summaries = new[]
 {

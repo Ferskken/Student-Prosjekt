@@ -95,41 +95,44 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted,onUnmounted, computed } from 'vue';
-import { useBooksStore } from '@/stores/books';
-import { bookServices } from '@/services/bookServices';
-import type { BookModel } from '@/models/bookModel';
-import Fuse from 'fuse.js';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useBooksStore } from '@/stores/books'; // Importing the book store
+import { bookServices } from '@/services/bookServices'; // Importing book services for API calls
+import type { BookModel } from '@/models/bookModel'; // Importing BookModel type
+import Fuse from 'fuse.js'; // Importing Fuse.js for search functionality
 
-const store = useBooksStore();
-const loading = ref(true);
-const error = ref<string | null>(null);
-const selectedBook = ref<BookModel | null>(null);
-const isEditing = ref(false);
-const editBook = ref<BookModel | null>(null);
-const searchTerm = ref('');
-const filteredBooks = ref([]);
-const exitingEditing = ref(false);
+// Refs for handling component state
+const store = useBooksStore(); // Access the Vuex store for books
+const loading = ref(true); // Tracks loading state
+const error = ref<string | null>(null); // Tracks error messages
+const selectedBook = ref<BookModel | null>(null); // Holds the currently selected book
+const isEditing = ref(false); // Indicates if the user is in editing mode
+const editBook = ref<BookModel | null>(null); // Holds the book being edited
+const searchTerm = ref(''); // Holds the search term input by the user
+const filteredBooks = ref([]); // Stores the filtered list of books based on search
+const exitingEditing = ref(false); // Tracks if the user is exiting editing mode
 
+// Fetches all books when the component is mounted
 onMounted(async () => {
   try {
-    loading.value = true;
-    const books: BookModel[] = await bookServices.getAllBooks();
-    store.setBooks(books);
+    loading.value = true; // Start loading
+    const books: BookModel[] = await bookServices.getAllBooks(); // Fetch all books
+    store.setBooks(books); // Store books in Vuex store
   } finally {
-    loading.value = false;
+    loading.value = false; // Stop loading when books are fetched
   }
 });
 
+// Computed property to get all books from the store
 const allBooks = computed(() => store.getBooks);
+// Computed property for accessing the list of books from the store
+const books = computed(() => store.getBooks);
 
-
+// Start editing the selected book
 const startEditing = () => {
   if (selectedBook.value) {
-   // console.log("Starting editing for:", selectedBook.value);
-    editBook.value = { ...selectedBook.value };
-    isEditing.value = true;
-
+    editBook.value = { ...selectedBook.value }; // Clone the selected book for editing
+    isEditing.value = true; // Set editing mode to true
   }
 };
 
@@ -138,22 +141,22 @@ const cancelEdit = () => {
 
   if (selectedBook.value) {
    // console.log(editBook.value)
-    editBook.value = { ...selectedBook.value };
+    editBook.value = { ...selectedBook.value }; // Revert changes by cloning selected book again
    // console.log(selectedBook.value)
   }
-  isEditing.value = false;
-  exitingEditing.value = true;
+  isEditing.value = false; // Exit editing mode
+  exitingEditing.value = true; // Set flag for exiting editing mode
 };
 
 // Update book details
 const updateBook = async () => {
-  if (!editBook.value) return;
+  if (!editBook.value) return; // Do nothing if there's no book being edited
 
   try {
     await bookServices.updateBook(editBook.value); // Call the update service
     console.log(`Book with ID ${editBook.value.id} updated successfully`);
 
-    // Update store and reset selected book
+    // Update the book in the store after successful update
     store.setBooks(store.getBooks.map(book => (book.id === editBook.value.id ? editBook.value : book)));
     selectedBook.value = editBook.value; // Update the selected book to the edited one
     isEditing.value = false; // Exit editing mode
@@ -163,77 +166,76 @@ const updateBook = async () => {
   }
 };
 
-const books = computed(() => store.getBooks);
 
+// Set filtered books when component is mounted
 onMounted(() => {
-  filteredBooks.value = books.value;
+  filteredBooks.value = books.value;  // Initially show all books
 });
 
+
+// Search through books using Fuse.js based on the search term
 const searchBooks = () => {
 
   if (!searchTerm.value.trim()) {
 
-    filteredBooks.value = allBooks.value;
+    filteredBooks.value = allBooks.value; // If search term is empty, show all books
     return;
   }
 
+  // fuse.ja search options
   const options = {
     keys: ['title', 'author', 'publisher', 'isbn', 'language','id','publicationDate'],
-    threshold: 0.2,
+    threshold: 0.2, //fuzzy matching threshold
   };
 
-  const fuse = new Fuse(allBooks.value, options);
+  const fuse = new Fuse(allBooks.value, options); // Initialize Fuse with all books and options
 
-  const result = fuse.search(searchTerm.value);
+  const result = fuse.search(searchTerm.value); // Perform the search
 
-  filteredBooks.value = result.map(item => item.item);
+  filteredBooks.value = result.map(item => item.item); // Update filtered books with search results
 };
 
-// Select a book
+// Select a book from the list
 const selectBook = (book: BookModel) => {
-  selectedBook.value = book;
-  editBook.value = { ...book };
-  isEditing.value = false;
+  selectedBook.value = book; // Set selected book
+  editBook.value = { ...book }; // Clone book for potential editing
+  isEditing.value = false; // Ensure editing mode is off
 };
 
-// Delete a book
+// Delete a book by its ID
 const deleteBook = async (bookId: number) => {
   try {
-    await bookServices.deleteBookbyId(bookId);
-    store.setBooks(store.getBooks.filter(book => book.id !== bookId));
-    selectedBook.value = null; // Clear selection after deletion
+    await bookServices.deleteBookbyId(bookId); // Call the service to delete the book
+    store.setBooks(store.getBooks.filter(book => book.id !== bookId)); // Remove the book from the store
+    selectedBook.value = null; // Clear selected book after deletion
   } catch (err) {
-    error.value = 'Failed to delete the book. Please try again.';
+    error.value = 'Failed to delete the book. Please try again.'; // Set error message on failure
   }
 };
 
 
- const handleClickOutside = (event: MouseEvent) => {
-  const bookListElement = document.querySelector('.book-list');
+// Handle clicks outside the book list to deselect a book
+const handleClickOutside = (event: MouseEvent) => {
+  const bookListElement = document.querySelector('.book-list'); // Select the book list element
   if (bookListElement && !bookListElement.contains(event.target as Node)) {
-    // Ensure that you only set selectedBook to null if not editing
+    // If clicking outside the book list and not editing, deselect the book
     if (!exitingEditing.value) {
-      selectedBook.value = null; // Hide selected book details only if not editing
+      selectedBook.value = null; // Deselect the book
       exitingEditing.value = false;
     }
   }
-  exitingEditing.value = false;
+  exitingEditing.value = false; // Reset exiting editing flag
 };
 
-
-
-
-// Add click event listener on mount
+// Add event listener for clicks when the component is mounted
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
 });
 
-// Cleanup listener on unmount
+// Remove the event listener when the component is unmounted
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside);
 });
-
-
 </script>
 
 <style scoped>
@@ -253,8 +255,6 @@ onUnmounted(() => {
   max-width: 100%;
   box-sizing: border-box;
 }
-
-
 .grid-item {
   cursor: pointer;
   background: white;
@@ -271,7 +271,6 @@ onUnmounted(() => {
 .delete-icon:hover svg path {
   fill: red;
 }
-
 .error {
   color: red;
   margin-top: 10px;
@@ -319,7 +318,6 @@ margin-bottom: 1em;
   font-size: 1.3rem;
   transition: border-color 0.3s;
 }
-
 .search-bar input:focus{
   border-color: #7daea6;
   outline: none;
@@ -327,13 +325,10 @@ margin-bottom: 1em;
 .search-bar input::placeholder{
   color: #aaa
 }
-
 .no-books-message {
   text-align: center;
   margin-top: 10rem;
   color: #555;
   font-size: 6rem;
 }
-
-
 </style>

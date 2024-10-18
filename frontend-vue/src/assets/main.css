@@ -1,35 +1,40 @@
+/* Importing the base styles from base.css */
 @import './base.css';
 
+/* Styling for the main application container */
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  max-width: 1280px; /* Maximum width of the app container */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 2rem; /* Padding around the container */
+  font-weight: normal; /* Set the font weight to normal */
 }
 
+/* Styling for anchor tags and elements with the class "green" */
 a,
 .green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+  text-decoration: none; /* Remove the default underline from links */
+  color: hsla(160, 100%, 37%, 1); /* Set the text color using HSLA */
+  transition: 0.4s; /* Apply a transition effect for hover states */
+  padding: 3px; /* Add padding around the text */
 }
 
+/* Media query for hover effects on devices that support hover */
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: hsla(160, 100%, 37%, 0.2); /* Light background on hover */
   }
 }
 
+/* Media query for larger screens (minimum width of 1024px) */
 @media (min-width: 1024px) {
   body {
-    display: flex;
-    place-items: center;
+    display: flex; /* Use flexbox layout for the body */
+    place-items: center; /* Center items vertically and horizontally */
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    display: grid; /* Use grid layout for the app container */
+    grid-template-columns: 1fr 1fr; /* Create two equal-width columns */
+    padding: 0 2rem; /* Add horizontal padding */
   }
 }

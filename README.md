@@ -142,7 +142,6 @@ npm run dev
 Once all services are up, the frontend should be available at http://localhost:<frontend_port>, and the backend APIs will be accessible at http://localhost:<backend_port>.
 
 
-
 # Development Tools 
 ## Recomended Tools
 
@@ -151,6 +150,27 @@ Once all services are up, the frontend should be available at http://localhost:<
 - **Vue.js Devtools** for inspecting Vue components during development.
 - **JavaScript Debug** for frontend debugging in Chrome.
 - **Postman** for testing API endpoints.
+- **Prettier** to ensure consistent styling across your project.
+
+
+
+
+### Code Formatting with Prettier
+
+Prettier is used to maintain consistent code formatting across the project. It ensures that all code follows the same style guidelines.
+
+#### Install Prettier
+
+If Prettier is not installed yet, you can install it using `npm` or `yarn`:
+
+```sh
+npm install --save-dev prettier
+```
+
+### Run Prettier 
+```sh
+npx prettier --write .
+```
 
 ## Debuging 
 

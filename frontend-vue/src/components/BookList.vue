@@ -105,7 +105,7 @@
 
       <!-- Displaying selected book details when not in editing mode -->
       <div v-else>
-        <p><strong>Title:</strong> {{ selectedBook.title }}</p> <!-- Display book title -->
+        <p class="book-title"><strong></strong> {{ selectedBook.title }}</p> <!-- Display book title -->
         <p><strong>ID:</strong> {{ selectedBook.id }}</p> <!-- Display book ID -->
         <p><strong>Author:</strong> {{ selectedBook.author }}</p> <!-- Display book author -->
         <p><strong>Publisher:</strong> {{ selectedBook.publisher }}</p> <!-- Display book publisher -->

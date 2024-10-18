@@ -238,97 +238,133 @@ onUnmounted(() => {
 });
 </script>
 
+
+
 <style scoped>
+/* Styling for the book list container */
 .book-list {
-  margin: 10px;
+  margin: 10px; /* Add margin around the book list */
 }
+
+/* Container for scrolling, limiting height */
 .scroll-container {
-  max-height: 65rem;
-  overflow-y: auto;
-  border-radius: 5px;
+  max-height: 65rem; /* Maximum height for scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border-radius: 5px; /* Rounded corners */
 }
+
+/* Grid layout for displaying books */
 .grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 10px;
-  padding: 10px;
-  max-width: 100%;
-  box-sizing: border-box;
+  display: grid; /* Enable grid layout */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid columns */
+  gap: 10px; /* Space between grid items */
+  padding: 10px; /* Padding inside the grid */
+  max-width: 100%; /* Allow grid to take full width */
+  box-sizing: border-box; /* Include padding in width calculations */
 }
+
+/* Individual grid item styling */
 .grid-item {
-  cursor: pointer;
-  background: white;
-  position: relative;
-  border-radius: 5px;
-  padding: 10px;
+  cursor: pointer; /* Change cursor to pointer on hover */
+  background: white; /* White background for grid items */
+  position: relative; /* Allow absolute positioning of child elements */
+  border-radius: 5px; /* Rounded corners for items */
+  padding: 10px; /* Padding inside grid items */
 }
+
+/* Styling for delete icon within grid items */
 .delete-icon {
-  position: absolute;
-  top: 10px;
-  right: -1px;
-  cursor: pointer;
+  position: absolute; /* Position icon relative to parent */
+  top: 10px; /* Position from the top */
+  right: -1px; /* Position from the right */
+  cursor: pointer; /* Change cursor to pointer on hover */
 }
+
+/* Change color of delete icon on hover */
 .delete-icon:hover svg path {
-  fill: red;
+  fill: red; /* Change icon color to red when hovered */
 }
+
+/* Error message styling */
 .error {
-  color: red;
-  margin-top: 10px;
+  color: red; /* Red text for errors */
+  margin-top: 10px; /* Space above error message */
 }
+
+/* Styling for the selected book details */
 .selected-book {
-  height: 16.5rem;
-  width: 20rem;
-  position: absolute;
-  top: -14.5rem;
-  left: 60rem;
-  background: white;
-  margin-top: 20px;
-  padding: 10px;
-  border-radius: 5px;
+  height: 16.5rem; /* Fixed height for selected book display */
+  width: 20rem; /* Fixed width for selected book display */
+  position: absolute; /* Absolute positioning for placement */
+  top: -14.5rem; /* Position above the scroll container */
+  left: 60rem; /* Position to the right of the scroll container */
+  background: white; /* White background for selected book */
+  margin-top: 20px; /* Space above selected book */
+  padding: 10px; /* Padding inside selected book display */
+  border-radius: 5px; /* Rounded corners */
 }
-.selected-book-edit-button{
-  position: absolute;
-  bottom: 0.5rem;
-  right: 1rem;
+
+/* Positioning for the edit button in selected book */
+.selected-book-edit-button {
+  position: absolute; /* Absolute positioning within selected book */
+  bottom: 0.5rem; /* Space from the bottom */
+  right: 1rem; /* Space from the right */
 }
-.selected-book-delete-button{
-  position: absolute;
-  bottom: 0.5rem;
-  right: 4rem;
+
+/* Positioning for the delete button in selected book */
+.selected-book-delete-button {
+  position: absolute; /* Absolute positioning within selected book */
+  bottom: 0.5rem; /* Space from the bottom */
+  right: 4rem; /* Space from the right */
 }
-.edit-book-update-button{
-  position: absolute;
-  bottom: 0.5rem;
-  right: 1rem;
+
+/* Positioning for update button in edit book */
+.edit-book-update-button {
+  position: absolute; /* Absolute positioning within edit book */
+  bottom: 0.5rem; /* Space from the bottom */
+  right: 1rem; /* Space from the right */
 }
-.edit-book-cancel-button{
-  position: absolute;
-  bottom: 0.5rem;
-  right: 5rem;
+
+/* Positioning for cancel button in edit book */
+.edit-book-cancel-button {
+  position: absolute; /* Absolute positioning within edit book */
+  bottom: 0.5rem; /* Space from the bottom */
+  right: 5rem; /* Space from the right */
 }
-.search-bar{
-  margin-top: 3rem;
-margin-bottom: 1em;
+
+/* Styling for the search bar container */
+.search-bar {
+  margin-top: 3rem; /* Space above search bar */
+  margin-bottom: 1em; /* Space below search bar */
 }
-.search-bar input{
-  width: 100%;
-  padding: 0.7rem;
-  border: 0.1rem solid #ccc;
-  border-radius: 0.5rem;
-  font-size: 1.3rem;
-  transition: border-color 0.3s;
+
+/* Styling for the input field in search bar */
+.search-bar input {
+  width: 100%; /* Full width input */
+  padding: 0.7rem; /* Padding inside input */
+  border: 0.1rem solid #ccc; /* Light gray border */
+  border-radius: 0.5rem; /* Rounded corners for input */
+  font-size: 1.3rem; /* Larger font size for input text */
+  transition: border-color 0.3s; /* Smooth transition for border color */
 }
-.search-bar input:focus{
-  border-color: #7daea6;
-  outline: none;
+
+/* Focused state for the search input */
+.search-bar input:focus {
+  border-color: #7daea6; /* Change border color on focus */
+  outline: none; /* Remove default outline */
 }
-.search-bar input::placeholder{
-  color: #aaa
+
+/* Placeholder text styling in search input */
+.search-bar input::placeholder {
+  color: #aaa; /* Light gray color for placeholder text */
 }
+
+/* Message displayed when there are no books available */
 .no-books-message {
-  text-align: center;
-  margin-top: 10rem;
-  color: #555;
-  font-size: 6rem;
+  text-align: center; /* Center-align the message */
+  margin-top: 10rem; /* Space above the message */
+  color: #555; /* Gray color for the message text */
+  font-size: 6rem; /* Large font size for emphasis */
 }
 </style>
+

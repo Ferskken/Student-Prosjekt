@@ -123,34 +123,6 @@ onMounted(async () => {
 
 const allBooks = computed(() => store.getBooks);
 
-// const selectBook = (book: BookModel) => {
-//   selectedBook.value = book;
-//   editBook.value = { ...book }; // Copy the selected book for editing
-//   isEditing.value = false; // Reset editing state
-// };
-
-
-
-// const deleteBook = async (bookId: number) => {
-//   console.log(`Attempting to delete book with ID: ${bookId}`);
-//   try {
-//     await bookServices.deleteBookbyId(bookId);
-//     console.log(`Book with ID ${bookId} deleted successfully`);
-//     store.setBooks(store.getBooks.filter(book => book.id !== bookId));
-//     selectedBook.value = null;
-//   } catch (err) {
-//     console.error('Error details:', err);
-//     error.value = 'Failed to delete the book. Please try again.';
-//   }
-// };
-
-// Start editing mode
-// const startEditing = () => {
-//   editBook.value = { ...selectedBook.value,publicationDate: selectedBook.value.publicationDate };
-//   console.log(selectedBook.value.publicationDate)
-//   console.log(selectedBook.value)
-//   isEditing.value = true;
-// };
 
 const startEditing = () => {
   if (selectedBook.value) {
@@ -235,16 +207,6 @@ const deleteBook = async (bookId: number) => {
   }
 };
 
-// Handle click outside to hide selected book details
-// const handleClickOutside = (event: MouseEvent) => {
-//   //console.log(selectedBook.value)
-//   const bookListElement = document.querySelector('.book-list');
-//  // console.log(selectedBook.value)
-//   if (bookListElement && !bookListElement.contains(event.target as Node)) {
-//     selectedBook.value = null;
-//     console.log(selectBook.value)
-//   }
-// };
 
  const handleClickOutside = (event: MouseEvent) => {
   const bookListElement = document.querySelector('.book-list');
@@ -258,20 +220,6 @@ const deleteBook = async (bookId: number) => {
   exitingEditing.value = false;
 };
 
-
-// const handleClickOutside = (event: MouseEvent) => {
-//   const bookListElement = document.querySelector('.book-list');
-
-  // Check if clicking outside the book list and not in editing mode
-//   if (bookListElement && !bookListElement.contains(event.target as Node)) {
-//     if (isEditing.value) { // Only set selectedBook to null if not in editing mode
-//       selectedBook.value = isEditing.value; // Hide selected book details
-//     }
-//     // else if (!isEditing.value) {
-//     //    selectedBook.value = null; // Hide selected book details only if not editing
-//     //  }
-//   }
-// };
 
 
 
@@ -299,7 +247,7 @@ onUnmounted(() => {
 }
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust min-width to 150px */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 10px;
   padding: 10px;
   max-width: 100%;
@@ -375,7 +323,6 @@ margin-bottom: 1em;
 .search-bar input:focus{
   border-color: #7daea6;
   outline: none;
-  //box-shadow: 0 0 2rem rgba(0, 123, 255, 0.5);
 }
 .search-bar input::placeholder{
   color: #aaa
@@ -383,9 +330,9 @@ margin-bottom: 1em;
 
 .no-books-message {
   text-align: center;
-  margin-top: 10rem; /* Space above the message */
+  margin-top: 10rem;
   color: #555;
-  font-size: 6rem; /* Larger font size */
+  font-size: 6rem;
 }
 
 

@@ -1,6 +1,8 @@
 <template>
   <div class="book-list">
+<!--  Container for the search bar  -->
     <div class="search-bar">
+<!--   input field for book searches-  v-model Binds the input value to the 'searchTerm' data property in the Vue instance  @input Event listener that triggers the 'searchBooks' method whenever the input value changes -->
       <input
         type="text"
         v-model="searchTerm"
@@ -11,14 +13,7 @@
     <div class="scroll-container">
       <div class="grid-container">
           <div class="grid-item" v-for="book in filteredBooks" :key="book.id" @click="selectBook(book)">
-            <div class="delete-icon" @click.stop="deleteBook(book.id)">
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 256 256" xml:space="preserve">
-    <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-      <path d="M 76.777 2.881 H 57.333 V 2.412 C 57.333 1.08 56.253 0 54.921 0 H 35.079 c -1.332 0 -2.412 1.08 -2.412 2.412 v 0.469 H 13.223 c -1.332 0 -2.412 1.08 -2.412 2.412 v 9.526 c 0 1.332 1.08 2.412 2.412 2.412 h 63.554 c 1.332 0 2.412 -1.08 2.412 -2.412 V 5.293 C 79.189 3.961 78.109 2.881 76.777 2.881 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="matrix(1 0 0 1 0 0)" stroke-linecap="round" />
-      <path d="M 73.153 22.119 H 16.847 c -1.332 0 -2.412 1.08 -2.412 2.412 v 63.057 c 0 1.332 1.08 2.412 2.412 2.412 h 56.306 c 1.332 0 2.412 -1.08 2.412 -2.412 V 24.531 C 75.565 23.199 74.485 22.119 73.153 22.119 z M 33.543 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z M 48.535 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z M 63.526 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="matrix(1 0 0 1 0 0)" stroke-linecap="round" />
-    </g>
-  </svg>
-            </div> <!-- Closing tag for a parent div (not shown in the provided snippet) -->
+            <IconTrashcan :onDelete="() => deleteBook(book.id)" />
 
             <!-- Display the title of the book -->
             <h3>{{ book.title }}</h3>
@@ -134,6 +129,7 @@ import { useBooksStore } from '@/stores/books'; // Importing the book store
 import { bookServices } from '@/services/bookServices'; // Importing book services for API calls
 import type { BookModel } from '@/models/bookModel'; // Importing BookModel type
 import Fuse from 'fuse.js'; // Importing Fuse.js for search functionality
+import IconTrashcan from '@/components/icons/IconTrashcan.vue'
 
 // Refs for handling component state
 const store = useBooksStore(); // Access the Vuex store for books
@@ -145,6 +141,7 @@ const editBook = ref<BookModel | null>(null); // Holds the book being edited
 const searchTerm = ref(''); // Holds the search term input by the user
 const filteredBooks = ref([]); // Stores the filtered list of books based on search
 const exitingEditing = ref(false); // Tracks if the user is exiting editing mode
+
 
 // Fetches all books when the component is mounted
 onMounted(async () => {

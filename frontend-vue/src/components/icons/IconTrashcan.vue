@@ -27,7 +27,13 @@ export default {
 
 <style scoped>
 .delete-icon {
+  opacity: 0.65;
   cursor: pointer;
   display: inline-block;
 }
+.delete-icon:hover {
+  opacity: 1;
+}
+
 </style>
+

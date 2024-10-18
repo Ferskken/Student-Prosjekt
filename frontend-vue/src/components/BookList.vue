@@ -1,6 +1,5 @@
 <template>
   <div class="book-list">
-<!--    <h2>Book List</h2>-->
     <div class="search-bar">
       <input
         type="text"
@@ -8,7 +7,6 @@
         placeholder="Search books..."
         @input="searchBooks"
       />
-<!--      -->
     </div>
     <div class="scroll-container">
       <div class="grid-container">

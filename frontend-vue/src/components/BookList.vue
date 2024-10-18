@@ -16,7 +16,7 @@
             <IconTrashcan :onDelete="() => deleteBook(book.id)" />
 
             <!-- Display the title of the book -->
-            <h3>{{ book.title }}</h3>
+            <h3 class = book-title>{{ book.title }}</h3>
 
             <!-- Display the ID of the book -->
             <p><strong>ID:</strong> {{ book.id }}</p>
@@ -301,6 +301,12 @@ onUnmounted(() => {
   position: relative; /* Allow absolute positioning of child elements */
   border-radius: 5px; /* Rounded corners for items */
   padding: 10px; /* Padding inside grid items */
+  transition: box-shadow 0.3s ease; /* Smooth transition for the shadow */
+  border: 2px solid transparent; /* Transparent border to prevent layout shift */
+}
+/* Hover effect for grid items */
+.grid-item:hover {
+  box-shadow: 0 0 10px 2px black; /* Glowing effect */
 }
 
 /* Styling for delete icon within grid items */
@@ -309,11 +315,6 @@ onUnmounted(() => {
   top: 10px; /* Position from the top */
   right: -1px; /* Position from the right */
   cursor: pointer; /* Change cursor to pointer on hover */
-}
-
-/* Change color of delete icon on hover */
-.delete-icon:hover svg path {
-  fill: red; /* Change icon color to red when hovered */
 }
 
 /* Error message styling */
@@ -396,6 +397,13 @@ onUnmounted(() => {
   margin-top: 10rem; /* Space above the message */
   color: #555; /* Gray color for the message text */
   font-size: 6rem; /* Large font size for emphasis */
+}
+.book-title{
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.book-title:hover{
+  text-decoration: underline;
 }
 </style>
 

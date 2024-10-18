@@ -18,79 +18,113 @@
       <path d="M 73.153 22.119 H 16.847 c -1.332 0 -2.412 1.08 -2.412 2.412 v 63.057 c 0 1.332 1.08 2.412 2.412 2.412 h 56.306 c 1.332 0 2.412 -1.08 2.412 -2.412 V 24.531 C 75.565 23.199 74.485 22.119 73.153 22.119 z M 33.543 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z M 48.535 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z M 63.526 81.32 c 0 1.332 -1.08 2.412 -2.412 2.412 h -2.245 c -1.332 0 -2.412 -1.08 -2.412 -2.412 V 30.799 c 0 -1.332 1.08 -2.412 2.412 -2.412 h 2.245 c 1.332 0 2.412 1.08 2.412 2.412 V 81.32 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform="matrix(1 0 0 1 0 0)" stroke-linecap="round" />
     </g>
   </svg>
-            </div>
+            </div> <!-- Closing tag for a parent div (not shown in the provided snippet) -->
 
+            <!-- Display the title of the book -->
             <h3>{{ book.title }}</h3>
-          <p><strong>ID:</strong> {{ book.id }}</p>
-          <p><strong>Author:</strong> {{ book.author }}</p>
-          <p><strong>Publisher:</strong> {{ book.publisher }}</p>
-          <p><strong>Publication Date:</strong> {{ new Date(book.publicationDate).toLocaleDateString() }}</p>
-          <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-          <p><strong>Edition:</strong> {{ book.edition }}</p>
-          <p><strong>Language:</strong> {{ book.language }}</p>
-        </div>
+
+            <!-- Display the ID of the book -->
+            <p><strong>ID:</strong> {{ book.id }}</p>
+
+            <!-- Display the author of the book -->
+            <p><strong>Author:</strong> {{ book.author }}</p>
+
+            <!-- Display the publisher of the book -->
+            <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+
+            <!-- Display the publication date of the book, formatted to a localized date string -->
+            <p><strong>Publication Date:</strong> {{ new Date(book.publicationDate).toLocaleDateString() }}</p>
+
+            <!-- Display the ISBN of the book -->
+            <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+
+            <!-- Display the edition of the book -->
+            <p><strong>Edition:</strong> {{ book.edition }}</p>
+
+            <!-- Display the language the book is written in -->
+            <p><strong>Language:</strong> {{ book.language }}</p>
+
+          </div> <!-- Closing tag for the book details container -->
+
       </div>
     </div>
 
+    <!-- Message displayed when no books are found -->
     <div v-if="filteredBooks.length === 0" class="no-books-message">
-      <h3>No books found!</h3>
+      <h3>No books found!</h3> <!-- Heading indicating no books available -->
     </div>
 
-
+    <!-- Loading message shown while books are being fetched -->
     <div v-if="loading">Loading books...</div>
+
+    <!-- Error message displayed when there's an issue fetching books -->
     <div v-if="error" class="error">{{ error }}</div>
 
-    <!-- Selected Book Information -->
+    <!-- Display for the selected book's details -->
     <div v-if="selectedBook" class="selected-book">
-      <h3>Selected Book Details</h3>
+      <h3>Selected Book Details</h3> <!-- Heading for selected book details -->
+
+      <!-- If the user is editing the book details -->
       <div v-if="isEditing">
         <div>
-        <label for="edit-title">Title:</label>
-        <input id="edit-title" v-model="editBook.title" required />
-      </div>
+          <label for="edit-title">Title:</label> <!-- Label for title input -->
+          <input id="edit-title" v-model="editBook.title" required /> <!-- Input for book title with two-way binding -->
+        </div>
 
         <div>
-        <label for="edit-author">Author:</label>
-        <input id="edit-author" v-model="editBook.author" required />
+          <label for="edit-author">Author:</label> <!-- Label for author input -->
+          <input id="edit-author" v-model="editBook.author" required /> <!-- Input for book author -->
         </div>
-          <div>
-        <label for="edit-publisher">Publisher:</label>
-        <input id="edit-publisher" v-model="editBook.publisher" required />
-          </div>
-            <div>
-        <label for="edit-publication-date">Publication Date:</label>
-        <input id="edit-publication-date" type="datetime-local" v-model="editBook.publicationDate" required />
-            </div>
-              <div>
-        <label for="edit-isbn">ISBN:</label>
-        <input id="edit-isbn" v-model="editBook.isbn" required />
-              </div>
+
         <div>
-        <label for="edit-edition">Edition:</label>
-        <input id="edit-edition" v-model="editBook.edition" />
+          <label for="edit-publisher">Publisher:</label> <!-- Label for publisher input -->
+          <input id="edit-publisher" v-model="editBook.publisher" required /> <!-- Input for book publisher -->
         </div>
-          <div>
-        <label for="edit-language">Language:</label>
-        <input id="edit-language" v-model="editBook.language" required />
-          </div>
-            <div>
-        <button class="edit-book-update-button" @click="updateBook">Update</button>
-        <button class="edit-book-cancel-button" @click="cancelEdit">Cancel</button>
-            </div>
+
+        <div>
+          <label for="edit-publication-date">Publication Date:</label> <!-- Label for publication date input -->
+          <input id="edit-publication-date" type="datetime-local" v-model="editBook.publicationDate" required /> <!-- Input for publication date -->
+        </div>
+
+        <div>
+          <label for="edit-isbn">ISBN:</label> <!-- Label for ISBN input -->
+          <input id="edit-isbn" v-model="editBook.isbn" required /> <!-- Input for book ISBN -->
+        </div>
+
+        <div>
+          <label for="edit-edition">Edition:</label> <!-- Label for edition input -->
+          <input id="edit-edition" v-model="editBook.edition" /> <!-- Input for book edition -->
+        </div>
+
+        <div>
+          <label for="edit-language">Language:</label> <!-- Label for language input -->
+          <input id="edit-language" v-model="editBook.language" required /> <!-- Input for book language -->
+        </div>
+
+        <!-- Buttons for updating or canceling the edit -->
+        <div>
+          <button class="edit-book-update-button" @click="updateBook">Update</button> <!-- Button to update book -->
+          <button class="edit-book-cancel-button" @click="cancelEdit">Cancel</button> <!-- Button to cancel editing -->
+        </div>
       </div>
+
+      <!-- Displaying selected book details when not in editing mode -->
       <div v-else>
-        <p><strong>Title:</strong> {{ selectedBook.title }}</p>
-        <p><strong>ID:</strong> {{ selectedBook.id }}</p>
-        <p><strong>Author:</strong> {{ selectedBook.author }}</p>
-        <p><strong>Publisher:</strong> {{ selectedBook.publisher }}</p>
-        <p><strong>Publication Date:</strong> {{ new Date(selectedBook.publicationDate).toLocaleDateString() }}</p>
-        <p><strong>ISBN:</strong> {{ selectedBook.isbn }}</p>
-        <p><strong>Edition:</strong> {{ selectedBook.edition }}</p>
-        <p><strong>Language:</strong> {{ selectedBook.language }}</p>
-        <button class="selected-book-edit-button" @click.stop ="startEditing">Edit</button>
-        <button class="selected-book-delete-button" @click.stop ="deleteBook(selectedBook.id)">Delete</button>
+        <p><strong>Title:</strong> {{ selectedBook.title }}</p> <!-- Display book title -->
+        <p><strong>ID:</strong> {{ selectedBook.id }}</p> <!-- Display book ID -->
+        <p><strong>Author:</strong> {{ selectedBook.author }}</p> <!-- Display book author -->
+        <p><strong>Publisher:</strong> {{ selectedBook.publisher }}</p> <!-- Display book publisher -->
+        <p><strong>Publication Date:</strong> {{ new Date(selectedBook.publicationDate).toLocaleDateString() }}</p> <!-- Format and display publication date -->
+        <p><strong>ISBN:</strong> {{ selectedBook.isbn }}</p> <!-- Display book ISBN -->
+        <p><strong>Edition:</strong> {{ selectedBook.edition }}</p> <!-- Display book edition -->
+        <p><strong>Language:</strong> {{ selectedBook.language }}</p> <!-- Display book language -->
+
+        <!-- Buttons for editing or deleting the selected book -->
+        <button class="selected-book-edit-button" @click.stop ="startEditing">Edit</button> <!-- Button to start editing book details -->
+        <button class="selected-book-delete-button" @click.stop ="deleteBook(selectedBook.id)">Delete</button> <!-- Button to delete the selected book -->
       </div>
     </div>
+
   </div>
 </template>
 
